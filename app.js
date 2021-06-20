@@ -11,10 +11,11 @@ const controllers = require("./controllers");
 app.use(express.json());
 
 app.use("/user", controllers.usercontroller);
+app.use(require("./middleware/validate-jwt"));
 app.use("/animal", controllers.animalcontroller);
 
 db.authenticate()
-  .then(() => db.sync()) // => {force: true}
+  .then(() => db.sync()) // => {force: true} this means delete databases
   .then(() => {
     app.listen(3000, () =>
       console.log(`[Server: ] App is listening on Port ${3000}`)
